@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DesiBulls — Bot Setup</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Outfit',sans-serif;background:#0a0a0f;color:#e8e6e3;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:40px 20px}
+.card{background:#12121a;border:1px solid rgba(255,255,255,0.06);border-radius:24px;padding:48px;max-width:560px;width:100%}
+.logo{font-size:24px;font-weight:800;margin-bottom:8px}
+.logo span{color:#00d4aa}
+.subtitle{color:#9ca3af;font-size:15px;margin-bottom:40px}
+h1{font-size:32px;font-weight:800;margin-bottom:8px;letter-spacing:-1px}
+.steps{margin:32px 0}
+.step{display:flex;gap:16px;margin-bottom:24px}
+.step-num{width:32px;height:32px;border-radius:50%;background:rgba(0,212,170,0.15);color:#00d4aa;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;flex-shrink:0;margin-top:2px}
+.step-text h3{font-size:16px;font-weight:700;margin-bottom:4px}
+.step-text p{color:#9ca3af;font-size:14px;line-height:1.5}
+.step-text code{background:#1a1a28;padding:2px 8px;border-radius:4px;font-family:'JetBrains Mono',monospace;font-size:12px;color:#00d4aa}
+form{margin-top:32px}
+label{font-size:14px;font-weight:600;display:block;margin-bottom:8px}
+input,select{width:100%;padding:14px 16px;background:#1a1a28;border:1px solid rgba(255,255,255,0.1);border-radius:12px;color:#e8e6e3;font-size:15px;font-family:'Outfit',sans-serif;margin-bottom:20px;outline:none;transition:border 0.2s}
+input:focus,select:focus{border-color:#00d4aa}
+input::placeholder{color:#6b7280}
+select{cursor:pointer;-webkit-appearance:none;appearance:none}
+select option{background:#1a1a28;color:#e8e6e3}
+button{width:100%;padding:16px;background:#00d4aa;color:#0a0a0f;border:none;border-radius:12px;font-size:16px;font-weight:700;cursor:pointer;font-family:'Outfit',sans-serif;transition:all 0.2s}
+button:hover{box-shadow:0 8px 30px rgba(0,212,170,0.15);transform:translateY(-2px)}
+.note{color:#6b7280;font-size:12px;margin-top:16px;text-align:center;line-height:1.5}
+.success{display:none;text-align:center;padding:40px 0}
+.success h2{font-size:28px;font-weight:800;margin-bottom:12px;color:#00d4aa}
+.success p{color:#9ca3af;font-size:15px;line-height:1.6}
+.check{width:80px;height:80px;border-radius:50%;background:rgba(0,212,170,0.15);display:flex;align-items:center;justify-content:center;margin:0 auto 24px;font-size:40px;color:#00d4aa}
+input[name="_gotcha"]{display:none}
+</style>
+</head>
+<body>
+<div class="card">
+<div id="form-section">
+<div class="logo">desi<span>bulls</span></div>
+<div class="subtitle">Thank you for subscribing!</div>
+<h1>Set up your bots</h1>
+<div class="steps">
+<div class="step">
+<div class="step-num">1</div>
+<div class="step-text">
+<h3>Create a Discord webhook</h3>
+<p>In your Discord server, right-click the channel where you want bots to post.<br><code>Edit Channel</code> &#8594; <code>Integrations</code> &#8594; <code>Webhooks</code> &#8594; <code>New Webhook</code> &#8594; Copy URL</p>
+</div>
+</div>
+<div class="step">
+<div class="step-num">2</div>
+<div class="step-text">
+<h3>Paste it below</h3>
+<p>We will configure your bots and have them posting within 24 hours.</p>
+</div>
+</div>
+</div>
+<form id="setup-form">
+<input type="hidden" name="access_key" value="d8cf1813-66c1-40ac-a4ca-5a6d34022c90">
+<input type="hidden" name="subject" value="New DesiBulls Client Setup">
+<input type="hidden" name="from_name" value="DesiBulls Setup">
+<input type="text" name="_gotcha" style="display:none">
+<label>Discord Webhook URL</label>
+<input type="url" name="webhook_url" placeholder="https://discord.com/api/webhooks/..." required>
+<label>Your Plan</label>
+<select name="plan" required>
+<option value="">Select your plan</option>
+<option value="Starter - $39/mo">Starter ($39/month)</option>
+<option value="Pro - $149/mo">Pro ($149/month)</option>
+</select>
+<label>Your Email</label>
+<input type="email" name="email" placeholder="your@email.com" required>
+<label>Your Discord Server Name</label>
+<input type="text" name="server_name" placeholder="My Trading Group" required>
+<button type="submit">Submit & Activate Bots</button>
+</form>
+<p class="note">Your bots will be configured and live within 24 hours.<br>You will receive a confirmation email once everything is set up.</p>
+</div>
+<div class="success" id="success-section">
+<div class="check">&#10003;</div>
+<h2>Setup received!</h2>
+<p>We have received your webhook details.<br><br>Your bots will be configured and posting to your Discord within 24 hours.<br><br>We will email you once everything is live.</p>
+</div>
+</div>
+<script>
+document.getElementById('setup-form').addEventListener('submit',function(e){
+  e.preventDefault();
+  var f=this;
+  var d=new FormData(f);
+  fetch('https://api.web3forms.com/submit',{method:'POST',body:d})
+  .then(function(r){return r.json()})
+  .then(function(j){
+    if(j.success){
+      document.getElementById('form-section').style.display='none';
+      document.getElementById('success-section').style.display='block';
+    }else{alert('Error. Please email support@tradelizer.com with your webhook URL.')}
+  })
+  .catch(function(){alert('Error. Please email support@tradelizer.com with your webhook URL.')});
+});
+</script>
+</body>
+</html>

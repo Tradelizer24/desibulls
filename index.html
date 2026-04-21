@@ -152,6 +152,18 @@ footer{padding:60px 0 40px;border-top:1px solid var(--border)}
 /* Animations */
 .fade-up{opacity:0;transform:translateY(30px);transition:all 0.6s ease}
 .fade-up.visible{opacity:1;transform:translateY(0)}
+
+.modal-overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);z-index:200;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
+.modal-overlay.show{display:flex}
+.modal{background:#12121a;border:1px solid rgba(255,255,255,0.1);border-radius:20px;padding:40px;max-width:480px;width:90%}
+.modal h2{font-size:24px;font-weight:800;margin-bottom:8px;letter-spacing:-1px}
+.modal p{color:#9ca3af;font-size:14px;margin-bottom:24px;line-height:1.5}
+.modal input{width:100%;padding:14px 16px;background:#1a1a28;border:1px solid rgba(255,255,255,0.1);border-radius:12px;color:#e8e6e3;font-size:15px;font-family:'Outfit',sans-serif;margin-bottom:12px;outline:none}
+.modal input:focus{border-color:#00d4aa}
+.modal input::placeholder{color:#6b7280}
+.modal button{width:100%;padding:14px;background:#00d4aa;color:#0a0a0f;border:none;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;font-family:'Outfit',sans-serif;margin-bottom:8px}
+.modal .cancel{background:transparent;color:#9ca3af;border:1px solid rgba(255,255,255,0.1)}
+.modal .steps-mini{font-size:12px;color:#6b7280;line-height:1.6;margin-bottom:16px;background:#1a1a28;padding:12px;border-radius:8px}
 </style>
 </head>
 <body>
@@ -327,7 +339,7 @@ footer{padding:60px 0 40px;border-top:1px solid var(--border)}
         <li>12+ automated daily posts</li>
         <li>Email support</li>
       </ul>
-      <a href="https://buy.stripe.com/fZudR88mp5bid1N9nk1Fe00?success_url=https://desibulls.com/setup.html" target="_blank" class="price-btn price-btn-secondary" id="starter-btn">Get started</a>
+      <a href="#" onclick="openModal('starter')" class="price-btn price-btn-secondary" id="starter-btn">Get started</a>
     </div>
     
     <div class="price-card featured fade-up">
@@ -343,7 +355,7 @@ footer{padding:60px 0 40px;border-top:1px solid var(--border)}
         <li>Dedicated setup &amp; configuration</li>
         <li>Priority support + setup call</li>
       </ul>
-      <a href="https://buy.stripe.com/28E00i1Y1avC3rdgPM1Fe01?success_url=https://desibulls.com/setup.html" target="_blank" class="price-btn price-btn-primary" id="pro-btn">Get started</a>
+      <a href="#" onclick="openModal('pro')" class="price-btn price-btn-primary" id="pro-btn">Get started</a>
     </div>
   </div>
 </div>
@@ -411,7 +423,45 @@ const observer=new IntersectionObserver((entries)=>{
   entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');observer.unobserve(e.target)}})
 },{threshold:0.1,rootMargin:'0px 0px -50px 0px'})
 document.querySelectorAll('.fade-up').forEach(el=>observer.observe(el))
+
+var selectedPlan='';
+var stripeLinks={starter:'https://buy.stripe.com/eVq6oJcs43rn54029ecQU00',pro:'https://buy.stripe.com/7sYbJ3gIkaTP0NK9BGcQU01'};
+
+function openModal(plan){selectedPlan=plan;document.getElementById('signup-modal').classList.add('show')}
+function closeModal(){document.getElementById('signup-modal').classList.remove('show')}
+
+function goToCheckout(){
+  var wh=document.getElementById('webhook-input').value.trim();
+  var em=document.getElementById('email-input').value.trim();
+  var nm=document.getElementById('name-input').value.trim();
+  if(!wh||!wh.includes('discord.com/api/webhooks')){alert('Please enter a valid Discord webhook URL');return}
+  if(!em||!em.includes('@')){alert('Please enter your email');return}
+  if(!nm){alert('Please enter your server name');return}
+  var ref=btoa(JSON.stringify({w:wh,e:em,n:nm,p:selectedPlan}));
+  var url=stripeLinks[selectedPlan]+'?client_reference_id='+encodeURIComponent(ref)+'&prefilled_email='+encodeURIComponent(em);
+  window.location.href=url;
+}
+
+document.getElementById('signup-modal').addEventListener('click',function(e){if(e.target===this)closeModal()});
 </script>
 
+
+<div class="modal-overlay" id="signup-modal">
+<div class="modal">
+<h2>Almost there!</h2>
+<p>Before checkout, we need your Discord webhook URL so we can activate your bots automatically after payment.</p>
+<div class="steps-mini">
+<strong>How to get your webhook URL:</strong><br>
+1. Open Discord → right-click your channel<br>
+2. Edit Channel → Integrations → Webhooks<br>
+3. New Webhook → Copy URL → Paste below
+</div>
+<input type="url" id="webhook-input" placeholder="https://discord.com/api/webhooks/...">
+<input type="email" id="email-input" placeholder="Your email address">
+<input type="text" id="name-input" placeholder="Your Discord server name">
+<button onclick="goToCheckout()">Continue to payment</button>
+<button class="cancel" onclick="closeModal()">Cancel</button>
+</div>
+</div>
 </body>
 </html>

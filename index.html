@@ -10,8 +10,8 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 :root{--bg:#050508;--surface:#0a0b10;--border:#16171f;--text:#e8e6f0;--muted:#6b6a7a;--accent:#c4f53e;--glow2:#7c3aed;--glow3:#06b6d4}
-html{scroll-behavior:smooth;overflow-x:hidden}
-body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+html{scroll-behavior:smooth;overflow-x:hidden;max-width:100vw}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;overflow-x:hidden;-webkit-font-smoothing:antialiased;max-width:100vw;position:relative}
 body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:9999;opacity:0.5}
 .orb{position:absolute;border-radius:50%;filter:blur(120px);pointer-events:none;z-index:0}
 .orb-1{width:600px;height:600px;background:radial-gradient(circle,rgba(196,245,62,0.12),transparent 70%);top:-200px;right:-100px}
@@ -42,10 +42,10 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:20px 40px;display:fl
 .hero-stat{text-align:center}
 .hero-stat .num{font-family:'Syne',sans-serif;font-size:36px;font-weight:800;color:var(--accent)}
 .hero-stat .lbl{font-size:12px;color:var(--muted);margin-top:4px;text-transform:uppercase;letter-spacing:0.1em}
-.scroll-hint{position:absolute;bottom:32px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;animation:fadeUp 0.8s ease 0.5s both}
-.scroll-hint span{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.15em}
-.scroll-line{width:1px;height:40px;background:linear-gradient(to bottom,var(--accent),transparent);animation:scrollPulse 2s infinite}
-@keyframes scrollPulse{0%{opacity:0;transform:scaleY(0.3)}50%{opacity:1}100%{opacity:0;transform:scaleY(1)}}
+
+
+
+
 section{position:relative;padding:120px 24px;max-width:1200px;margin:0 auto}
 .section-label{font-size:11px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:0.2em;margin-bottom:16px}
 .section-title{font-family:'Syne',sans-serif;font-size:clamp(32px,5vw,56px);font-weight:800;letter-spacing:-0.03em;line-height:1.05;max-width:700px}
@@ -137,7 +137,7 @@ footer{flex-direction:column;text-align:center;padding:32px 20px}
 </style>
 </head>
 <body>
-<div class="orb orb-1"></div><div class="orb orb-2"></div><div class="orb orb-3"></div><div class="orb orb-4"></div><div class="orb orb-5"></div>
+<div style="position:fixed;top:0;left:0;width:100%;height:100%;overflow:hidden;pointer-events:none;z-index:0"><div class="orb orb-1"></div><div class="orb orb-2"></div><div class="orb orb-3"></div><div class="orb orb-4"></div><div class="orb orb-5"></div></div>
 <nav>
 <div style="display:flex;align-items:center;gap:12px"><div class="logo">DESI BULLS</div><span style="font-size:10px;color:var(--muted);letter-spacing:0.08em;text-transform:uppercase;border-left:1px solid var(--border);padding-left:12px">Powered by Tradelizer</span></div>
 <div class="nav-links" id="navLinks">
@@ -161,7 +161,7 @@ footer{flex-direction:column;text-align:center;padding:32px 20px}
 <div class="hero-stat"><div class="num">24/7</div><div class="lbl">Automated</div></div>
 
 </div>
-<div class="scroll-hint"><span>Scroll</span><div class="scroll-line"></div></div>
+
 </section>
 
 <section id="bots">
@@ -191,12 +191,16 @@ footer{flex-direction:column;text-align:center;padding:32px 20px}
 <div class="section-sub">Every signal, every scan, every alert &mdash; automated and on time.</div>
 </div>
 <div class="schedule reveal">
-<div class="sched-row"><div class="sched-time">6:00 AM</div><div><div class="sched-name">Earnings Alerts</div><div class="sched-desc">Stocks reporting today with implied vs historical moves</div></div></div>
-<div class="sched-row"><div class="sched-time">7:00 AM</div><div><div class="sched-name">RS Scanner + Day Trade Watchlist</div><div class="sched-desc">50-stock momentum scan + top 10 expected movers</div></div></div>
-<div class="sched-row"><div class="sched-time">7:30 AM</div><div><div class="sched-name">Fear &amp; Greed + SPY Key Levels</div><div class="sched-desc">Market sentiment composite + pivot points for scalpers</div></div></div>
-<div class="sched-row"><div class="sched-time">9:35 AM</div><div><div class="sched-name">Expected Move (Live)</div><div class="sched-desc">0DTE SPY straddle from IBKR &mdash; Pro exclusive</div></div></div>
-<div class="sched-row"><div class="sched-time">8AM-9PM</div><div><div class="sched-name">AI Scanner On Demand</div><div class="sched-desc">!scan or !ai any stock for instant analysis</div></div></div>
-<div class="sched-row"><div class="sched-time">4:15 PM</div><div><div class="sched-name">Close Reports</div><div class="sched-desc">RS update, Fear &amp; Greed, OI changes, volume spikes</div></div></div>
+<div style="font-size:11px;color:var(--muted);margin-bottom:16px;letter-spacing:0.1em;text-transform:uppercase">All times in Eastern Standard Time (EST)</div>
+<div class="sched-row"><div class="sched-time">8:00 AM</div><div><div class="sched-name">Economic Calendar + Earnings Alert</div><div class="sched-desc">Today's economic events with SPX impact + stocks reporting after hours</div></div></div>
+<div class="sched-row"><div class="sched-time">8:30 AM</div><div><div class="sched-name">SPY Key Levels</div><div class="sched-desc">Pivot points, R1-R3, S1-S3, ATR bands, round numbers &mdash; scalper cheat sheet</div></div></div>
+<div class="sched-row"><div class="sched-time">9:00 AM</div><div><div class="sched-name">RS Scanner + Day Trade Watchlist</div><div class="sched-desc">50-stock momentum scan + top 10 expected movers ranked by range</div></div></div>
+<div class="sched-row"><div class="sched-time">9:30 AM</div><div><div class="sched-name">Fear &amp; Greed Index</div><div class="sched-desc">Composite market sentiment score from VIX, breadth, momentum</div></div></div>
+<div class="sched-row"><div class="sched-time">9:35 AM</div><div><div class="sched-name">Expected Move (IBKR Live)</div><div class="sched-desc">Live 0DTE SPY straddle from our brokerage &mdash; Pro exclusive</div></div></div>
+<div class="sched-row"><div class="sched-time">8AM-9PM</div><div><div class="sched-name">AI Scanner On Demand</div><div class="sched-desc">!scan or !ai any stock for instant Claude AI analysis</div></div></div>
+<div class="sched-row"><div class="sched-time">4:00 PM</div><div><div class="sched-name">Earnings After-Hours</div><div class="sched-desc">Expected up/down moves for stocks reporting after the close</div></div></div>
+<div class="sched-row"><div class="sched-time">4:15 PM</div><div><div class="sched-name">RS Close + Fear &amp; Greed</div><div class="sched-desc">End-of-day relative strength report + updated sentiment score</div></div></div>
+<div class="sched-row"><div class="sched-time">4:30 PM</div><div><div class="sched-name">OI Tracker + Volume Spikes</div><div class="sched-desc">Options open interest changes + unusual volume detection</div></div></div>
 <div class="sched-row"><div class="sched-time">Sunday</div><div><div class="sched-name">Weekly Preview</div><div class="sched-desc">Economic calendar + earnings preview for the week ahead</div></div></div>
 </div>
 </section>
@@ -253,7 +257,7 @@ footer{flex-direction:column;text-align:center;padding:32px 20px}
 
 <footer>
 <div style="display:flex;align-items:center;gap:12px"><div class="logo">DESI BULLS</div><span style="font-size:10px;color:var(--muted);letter-spacing:0.08em;text-transform:uppercase;border-left:1px solid var(--border);padding-left:12px">Powered by Tradelizer</span></div>
-<div class="footer-links"><a href="mailto:support@tradelizer.com">Contact</a><a href="/setup.html">Setup</a><a href="#">Discord</a></div>
+<div class="footer-links"><a href="mailto:support@tradelizer.com">Contact</a><a href="/setup.html">Setup Guide</a></div>
 <p>&copy; 2026 Desi Bulls. All rights reserved.</p>
 </footer>
 

@@ -2,490 +2,291 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>DesiBulls — AI-Powered Trading Discord Bots</title>
-<meta name="description" content="Professional trading bots for your Discord community. AI stock scanner, relative strength, fear & greed, earnings predictor, and more.">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Desi Bulls — AI-Powered Trading Intelligence</title>
+<meta name="description" content="10 automated trading bots. 15+ daily posts. Professional-grade market intelligence for $1/day.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-:root{
-  --bg:#0a0a0f;--bg2:#12121a;--bg3:#1a1a28;
-  --text:#e8e6e3;--text2:#9ca3af;--text3:#6b7280;
-  --accent:#00d4aa;--accent2:#00b894;--accent-glow:rgba(0,212,170,0.15);
-  --gold:#f59e0b;--red:#ef4444;--blue:#3b82f6;--purple:#8b5cf6;
-  --border:rgba(255,255,255,0.06);
-  --font:'Outfit',sans-serif;--mono:'JetBrains Mono',monospace;
-}
-html{scroll-behavior:smooth}
-body{font-family:var(--font);background:var(--bg);color:var(--text);overflow-x:hidden;-webkit-font-smoothing:antialiased}
-
-/* Nav */
-nav{position:fixed;top:0;width:100%;z-index:100;padding:20px 0;transition:all 0.3s}
-nav.scrolled{background:rgba(10,10,15,0.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
-.nav-inner{max-width:1200px;margin:0 auto;padding:0 40px;display:flex;justify-content:space-between;align-items:center}
-.logo{font-size:24px;font-weight:800;letter-spacing:-0.5px}
-.logo span{color:var(--accent)}
+:root{--bg:#050508;--surface:#0a0b10;--border:#16171f;--text:#e8e6f0;--muted:#6b6a7a;--accent:#c4f53e;--glow2:#7c3aed;--glow3:#06b6d4}
+html{scroll-behavior:smooth;overflow-x:hidden}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:9999;opacity:0.5}
+.orb{position:absolute;border-radius:50%;filter:blur(120px);pointer-events:none;z-index:0}
+.orb-1{width:600px;height:600px;background:radial-gradient(circle,rgba(196,245,62,0.12),transparent 70%);top:-200px;right:-100px}
+.orb-2{width:500px;height:500px;background:radial-gradient(circle,rgba(124,58,237,0.1),transparent 70%);top:400px;left:-200px}
+.orb-3{width:700px;height:700px;background:radial-gradient(circle,rgba(6,182,212,0.08),transparent 70%);top:1200px;right:-200px}
+.orb-4{width:600px;height:600px;background:radial-gradient(circle,rgba(196,245,62,0.06),transparent 70%);top:2400px;left:-100px}
+.orb-5{width:500px;height:500px;background:radial-gradient(circle,rgba(124,58,237,0.08),transparent 70%);top:3600px;right:-150px}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:20px 40px;display:flex;justify-content:space-between;align-items:center;backdrop-filter:blur(20px);background:rgba(5,5,8,0.7);border-bottom:1px solid rgba(255,255,255,0.04);transition:all 0.3s}
+.logo{font-family:'Syne',sans-serif;font-size:24px;font-weight:800;letter-spacing:-0.03em;background:linear-gradient(135deg,var(--accent),#fff);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
 .nav-links{display:flex;gap:32px;align-items:center}
-.nav-links a{color:var(--text2);text-decoration:none;font-size:14px;font-weight:500;transition:color 0.2s}
-.nav-links a:hover{color:var(--accent)}
-.nav-cta{background:var(--accent)!important;color:#0a0a0f!important;padding:10px 24px;border-radius:8px;font-weight:600;transition:transform 0.2s,box-shadow 0.2s}
-.nav-cta:hover{transform:translateY(-1px);box-shadow:0 4px 20px var(--accent-glow)}
-
-/* Hero */
-.hero{min-height:100vh;display:flex;align-items:center;position:relative;overflow:hidden}
-.hero::before{content:'';position:absolute;top:-50%;right:-30%;width:800px;height:800px;background:radial-gradient(circle,var(--accent-glow) 0%,transparent 70%);pointer-events:none}
-.hero::after{content:'';position:absolute;bottom:-30%;left:-20%;width:600px;height:600px;background:radial-gradient(circle,rgba(139,92,246,0.08) 0%,transparent 70%);pointer-events:none}
-.hero-inner{max-width:1200px;margin:0 auto;padding:120px 40px 80px;position:relative;z-index:1}
-.hero-badge{display:inline-flex;align-items:center;gap:8px;background:var(--bg3);border:1px solid var(--border);padding:8px 16px;border-radius:100px;font-size:13px;color:var(--accent);margin-bottom:32px;font-weight:500}
-.hero-badge::before{content:'';width:8px;height:8px;background:var(--accent);border-radius:50%;animation:pulse 2s infinite}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
-.hero h1{font-size:72px;font-weight:900;line-height:1.05;letter-spacing:-3px;margin-bottom:24px;max-width:800px}
-.hero h1 .gr{background:linear-gradient(135deg,var(--accent),var(--blue));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.hero p{font-size:20px;color:var(--text2);max-width:560px;line-height:1.6;margin-bottom:40px}
-.hero-btns{display:flex;gap:16px;flex-wrap:wrap}
-.btn-primary{background:var(--accent);color:#0a0a0f;padding:16px 36px;border-radius:12px;font-size:16px;font-weight:700;text-decoration:none;transition:all 0.2s;border:none;cursor:pointer;font-family:var(--font)}
-.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 30px var(--accent-glow)}
-.btn-secondary{background:transparent;color:var(--text);padding:16px 36px;border-radius:12px;font-size:16px;font-weight:600;text-decoration:none;border:1px solid rgba(255,255,255,0.15);transition:all 0.2s}
-.btn-secondary:hover{border-color:var(--accent);color:var(--accent)}
-
-/* Stats bar */
-.stats-bar{max-width:1200px;margin:0 auto;padding:0 40px}
-.stats-inner{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border-radius:16px;overflow:hidden;border:1px solid var(--border)}
-.stat{background:var(--bg2);padding:32px;text-align:center}
-.stat-num{font-size:36px;font-weight:800;font-family:var(--mono);color:var(--accent)}
-.stat-label{font-size:13px;color:var(--text3);margin-top:6px;text-transform:uppercase;letter-spacing:1px}
-
-/* Section base */
-section{padding:120px 0}
-.section-inner{max-width:1200px;margin:0 auto;padding:0 40px}
-.section-tag{color:var(--accent);font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:2px;margin-bottom:12px}
-.section-title{font-size:48px;font-weight:800;letter-spacing:-2px;margin-bottom:16px}
-.section-sub{font-size:18px;color:var(--text2);max-width:560px;line-height:1.6}
-
-/* Bots Grid */
-.bots-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:60px}
-.bot-card{background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:32px;transition:all 0.3s;position:relative;overflow:hidden}
-.bot-card:hover{border-color:rgba(0,212,170,0.3);transform:translateY(-4px);box-shadow:0 20px 40px rgba(0,0,0,0.3)}
-.bot-icon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:24px;margin-bottom:20px}
-.bot-card h3{font-size:20px;font-weight:700;margin-bottom:8px}
-.bot-card p{color:var(--text2);font-size:14px;line-height:1.6}
-.bot-tag{display:inline-block;padding:4px 10px;border-radius:6px;font-size:11px;font-weight:600;margin-top:16px;text-transform:uppercase;letter-spacing:0.5px}
-.tag-free{background:rgba(0,212,170,0.1);color:var(--accent)}
-.tag-ai{background:rgba(139,92,246,0.1);color:var(--purple)}
-.tag-data{background:rgba(59,130,246,0.1);color:var(--blue)}
-
-/* How it works */
-.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:40px;margin-top:60px}
-.step{text-align:center;position:relative}
-.step-num{font-size:64px;font-weight:900;color:var(--bg3);font-family:var(--mono);line-height:1;margin-bottom:16px}
-.step h3{font-size:20px;font-weight:700;margin-bottom:8px}
-.step p{color:var(--text2);font-size:15px;line-height:1.6}
-
-/* Pricing */
-.pricing-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;margin-top:60px;max-width:900px;margin-left:auto;margin-right:auto}
-.price-card{background:var(--bg2);border:1px solid var(--border);border-radius:20px;padding:40px;position:relative}
-.price-card.featured{border-color:var(--accent);box-shadow:0 0 60px var(--accent-glow)}
-.price-card.featured::before{content:'MOST POPULAR';position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--accent);color:#0a0a0f;padding:4px 16px;border-radius:100px;font-size:11px;font-weight:700;letter-spacing:1px}
-.price-name{font-size:16px;font-weight:600;color:var(--text2);margin-bottom:8px}
-.price-amount{font-size:52px;font-weight:900;font-family:var(--mono);letter-spacing:-2px}
-.price-amount span{font-size:18px;color:var(--text3);font-weight:400;letter-spacing:0}
-.price-desc{color:var(--text2);font-size:14px;margin:16px 0 24px;line-height:1.5}
+.nav-links a{color:var(--muted);text-decoration:none;font-size:14px;font-weight:500;transition:color 0.3s}
+.nav-links a:hover{color:var(--text)}
+.nav-cta{background:var(--accent)!important;-webkit-text-fill-color:#050508!important;padding:10px 24px;border-radius:100px;font-size:13px;font-weight:700;letter-spacing:0.02em;transition:all 0.3s}
+.nav-cta:hover{box-shadow:0 0 30px rgba(196,245,62,0.3);transform:translateY(-1px)}
+.hero{position:relative;min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:140px 24px 80px;overflow:hidden}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(196,245,62,0.06);border:1px solid rgba(196,245,62,0.15);padding:8px 20px;border-radius:100px;font-size:12px;font-weight:600;color:var(--accent);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:32px;animation:fadeUp 0.8s ease both}
+.hero-badge::before{content:'';width:6px;height:6px;background:var(--accent);border-radius:50%;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.3}}
+.hero h1{font-family:'Syne',sans-serif;font-size:clamp(48px,8vw,96px);font-weight:800;line-height:0.95;letter-spacing:-0.04em;max-width:900px;animation:fadeUp 0.8s ease 0.1s both}
+.hero h1 .accent{background:linear-gradient(135deg,var(--accent),var(--glow3));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero-sub{font-size:clamp(16px,2vw,20px);color:var(--muted);max-width:560px;line-height:1.6;margin-top:28px;animation:fadeUp 0.8s ease 0.2s both}
+.hero-actions{display:flex;gap:16px;margin-top:40px;animation:fadeUp 0.8s ease 0.3s both;flex-wrap:wrap;justify-content:center}
+.btn-primary{background:var(--accent);color:#050508;padding:16px 40px;border-radius:100px;font-size:15px;font-weight:700;text-decoration:none;transition:all 0.3s;display:inline-flex;align-items:center;gap:8px}
+.btn-primary:hover{box-shadow:0 0 40px rgba(196,245,62,0.25);transform:translateY(-2px)}
+.btn-secondary{background:transparent;color:var(--text);padding:16px 40px;border-radius:100px;font-size:15px;font-weight:600;text-decoration:none;border:1px solid var(--border);transition:all 0.3s}
+.btn-secondary:hover{border-color:var(--muted);background:rgba(255,255,255,0.03)}
+.hero-stats{display:flex;gap:48px;margin-top:72px;animation:fadeUp 0.8s ease 0.4s both}
+.hero-stat{text-align:center}
+.hero-stat .num{font-family:'Syne',sans-serif;font-size:36px;font-weight:800;color:var(--accent)}
+.hero-stat .lbl{font-size:12px;color:var(--muted);margin-top:4px;text-transform:uppercase;letter-spacing:0.1em}
+.scroll-hint{position:absolute;bottom:32px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;animation:fadeUp 0.8s ease 0.5s both}
+.scroll-hint span{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.15em}
+.scroll-line{width:1px;height:40px;background:linear-gradient(to bottom,var(--accent),transparent);animation:scrollPulse 2s infinite}
+@keyframes scrollPulse{0%{opacity:0;transform:scaleY(0.3)}50%{opacity:1}100%{opacity:0;transform:scaleY(1)}}
+section{position:relative;padding:120px 24px;max-width:1200px;margin:0 auto}
+.section-label{font-size:11px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:0.2em;margin-bottom:16px}
+.section-title{font-family:'Syne',sans-serif;font-size:clamp(32px,5vw,56px);font-weight:800;letter-spacing:-0.03em;line-height:1.05;max-width:700px}
+.section-sub{font-size:17px;color:var(--muted);max-width:500px;line-height:1.65;margin-top:20px}
+.bots-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:2px;margin-top:60px;border-radius:20px;overflow:hidden}
+.bot-card{background:var(--surface);padding:40px 32px;position:relative;transition:all 0.4s;cursor:default;border:1px solid transparent}
+.bot-card:hover{background:#0e0f16;border-color:rgba(196,245,62,0.08)}
+.bot-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(196,245,62,0.2),transparent);opacity:0;transition:opacity 0.4s}
+.bot-card:hover::before{opacity:1}
+.bot-num{font-family:'Syne',sans-serif;font-size:48px;font-weight:800;color:rgba(196,245,62,0.06);position:absolute;top:16px;right:24px;line-height:1}
+.bot-icon{font-size:28px;margin-bottom:16px;display:block}
+.bot-name{font-family:'Syne',sans-serif;font-size:18px;font-weight:700;letter-spacing:-0.01em;margin-bottom:10px}
+.bot-desc{font-size:14px;color:var(--muted);line-height:1.6}
+.bot-tag{display:inline-block;margin-top:14px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;padding:5px 12px;border-radius:100px}
+.tag-live{background:rgba(196,245,62,0.08);color:var(--accent);border:1px solid rgba(196,245,62,0.15)}
+.tag-pro{background:rgba(124,58,237,0.1);color:#a78bfa;border:1px solid rgba(124,58,237,0.2)}
+.tag-data{background:rgba(6,182,212,0.08);color:#67e8f9;border:1px solid rgba(6,182,212,0.15)}
+.track-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-top:60px;border-radius:20px;overflow:hidden}
+.track-card{background:var(--surface);padding:48px 40px}
+.track-card .big{font-family:'Syne',sans-serif;font-size:64px;font-weight:800;line-height:1}
+.track-card .big.green{color:var(--accent)}
+.track-card .big.cyan{color:var(--glow3)}
+.track-card .big.purple{color:#a78bfa}
+.track-card .label{font-size:14px;color:var(--muted);margin-top:12px;line-height:1.5}
+.pricing-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:60px;max-width:900px}
+.price-card{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:48px 40px;position:relative;transition:all 0.4s}
+.price-card.featured{border-color:rgba(196,245,62,0.2);background:linear-gradient(145deg,rgba(196,245,62,0.03),var(--surface))}
+.price-card.featured::before{content:'MOST POPULAR';position:absolute;top:-12px;left:32px;background:var(--accent);color:#050508;font-size:10px;font-weight:800;letter-spacing:0.1em;padding:5px 14px;border-radius:100px}
+.price-label{font-size:13px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.1em}
+.price-amount{font-family:'Syne',sans-serif;font-size:56px;font-weight:800;margin:16px 0 4px;letter-spacing:-0.03em}
+.price-amount span{font-size:18px;font-weight:400;color:var(--muted)}
+.price-note{font-size:13px;color:var(--muted);margin-bottom:28px}
 .price-features{list-style:none;margin-bottom:32px}
-.price-features li{padding:10px 0;border-bottom:1px solid var(--border);font-size:14px;color:var(--text2);display:flex;align-items:center;gap:10px}
-.price-features li::before{content:'✓';color:var(--accent);font-weight:700;font-size:16px}
-.price-btn{display:block;text-align:center;padding:16px;border-radius:12px;font-size:15px;font-weight:700;text-decoration:none;transition:all 0.2s;font-family:var(--font)}
-.price-btn-primary{background:var(--accent);color:#0a0a0f}
-.price-btn-primary:hover{box-shadow:0 8px 30px var(--accent-glow);transform:translateY(-2px)}
-.price-btn-secondary{background:var(--bg3);color:var(--text);border:1px solid var(--border)}
-.price-btn-secondary:hover{border-color:var(--accent)}
-
-/* Discord preview */
-.preview{background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:24px;max-width:600px;margin:60px auto 0;font-family:var(--mono);font-size:13px}
-.preview-header{display:flex;align-items:center;gap:10px;margin-bottom:16px;padding-bottom:16px;border-bottom:1px solid var(--border)}
-.preview-dot{width:10px;height:10px;border-radius:50%;background:var(--accent)}
-.preview-title{color:var(--text2);font-size:12px;text-transform:uppercase;letter-spacing:1px}
-.preview-line{padding:6px 0;color:var(--text2)}
-.preview-line .cmd{color:var(--accent)}
-.preview-line .val{color:var(--gold)}
-.preview-line .pos{color:#10b981}
-.preview-line .neg{color:var(--red)}
-
-/* Testimonials */
-.testimonials{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:60px}
-.test-card{background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:28px}
-.test-stars{color:var(--gold);font-size:16px;margin-bottom:12px;letter-spacing:2px}
-.test-text{color:var(--text2);font-size:14px;line-height:1.6;margin-bottom:16px;font-style:italic}
-.test-author{font-size:13px;font-weight:600}
-.test-role{font-size:12px;color:var(--text3)}
-
-/* CTA */
-.cta-section{background:linear-gradient(135deg,rgba(0,212,170,0.05),rgba(139,92,246,0.05));border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
-.cta-inner{text-align:center;max-width:700px;margin:0 auto}
-.cta-inner h2{font-size:48px;font-weight:900;letter-spacing:-2px;margin-bottom:16px}
-.cta-inner p{color:var(--text2);font-size:18px;margin-bottom:40px;line-height:1.6}
-
-/* Footer */
-footer{padding:60px 0 40px;border-top:1px solid var(--border)}
-.footer-inner{max-width:1200px;margin:0 auto;padding:0 40px;display:flex;justify-content:space-between;align-items:center}
+.price-features li{padding:10px 0;font-size:14px;color:var(--muted);border-bottom:1px solid rgba(255,255,255,0.03);display:flex;align-items:center;gap:10px}
+.price-features li::before{content:'\2192';color:var(--accent);font-weight:700;font-size:12px}
+.price-btn{display:block;text-align:center;padding:16px;border-radius:12px;font-size:14px;font-weight:700;text-decoration:none;transition:all 0.3s;letter-spacing:0.02em;cursor:pointer}
+.price-btn.primary{background:var(--accent);color:#050508}
+.price-btn.primary:hover{box-shadow:0 0 30px rgba(196,245,62,0.2)}
+.price-btn.secondary{background:rgba(255,255,255,0.04);color:var(--text);border:1px solid var(--border)}
+.price-btn.secondary:hover{border-color:var(--muted)}
+.schedule{margin-top:60px}
+.sched-row{display:flex;align-items:flex-start;gap:24px;padding:20px 0;border-bottom:1px solid rgba(255,255,255,0.03);transition:all 0.3s}
+.sched-row:hover{background:rgba(196,245,62,0.02);padding-left:12px}
+.sched-time{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;color:var(--accent);min-width:100px}
+.sched-name{font-size:15px;font-weight:600}
+.sched-desc{font-size:13px;color:var(--muted);margin-top:2px}
+.cta-section{text-align:center;padding:160px 24px;position:relative}
+.cta-section h2{font-family:'Syne',sans-serif;font-size:clamp(36px,6vw,72px);font-weight:800;letter-spacing:-0.04em;line-height:1;max-width:800px;margin:0 auto}
+.cta-section .accent{background:linear-gradient(135deg,var(--accent),var(--glow3));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.cta-section p{font-size:18px;color:var(--muted);margin:24px auto 40px;max-width:460px}
+footer{border-top:1px solid var(--border);padding:48px 40px;display:flex;justify-content:space-between;align-items:center;max-width:1200px;margin:0 auto;flex-wrap:wrap;gap:20px}
+footer .logo{font-size:20px}
+footer p{font-size:12px;color:var(--muted)}
+footer a{color:var(--muted);text-decoration:none;font-size:13px;transition:color 0.3s}
+footer a:hover{color:var(--text)}
 .footer-links{display:flex;gap:24px}
-.footer-links a{color:var(--text3);text-decoration:none;font-size:13px;transition:color 0.2s}
-.footer-links a:hover{color:var(--accent)}
-.footer-copy{color:var(--text3);font-size:13px}
-
-/* Mobile */
+@keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+.reveal{opacity:0;transform:translateY(40px);transition:all 0.7s cubic-bezier(0.16,1,0.3,1)}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.modal-overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(5,5,8,0.85);backdrop-filter:blur(12px);z-index:200;justify-content:center;align-items:center}
+.modal-overlay.active{display:flex}
+.modal{background:var(--surface);border:1px solid var(--border);border-radius:24px;padding:48px;width:440px;max-width:90vw;position:relative}
+.modal h3{font-family:'Syne',sans-serif;font-size:24px;font-weight:800;margin-bottom:8px}
+.modal p{font-size:14px;color:var(--muted);margin-bottom:28px;line-height:1.5}
+.modal input{width:100%;padding:14px 18px;border:1px solid var(--border);border-radius:10px;background:rgba(255,255,255,0.03);color:var(--text);font-size:14px;margin-bottom:12px;outline:none;font-family:inherit;transition:border 0.3s}
+.modal input:focus{border-color:rgba(196,245,62,0.3)}
+.modal input::placeholder{color:var(--muted)}
+.modal button.submit{width:100%;padding:14px;border:none;border-radius:10px;background:var(--accent);color:#050508;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;margin-top:8px;transition:all 0.3s}
+.modal button.submit:hover{box-shadow:0 0 30px rgba(196,245,62,0.2)}
+.modal .close{position:absolute;top:16px;right:20px;background:none;border:none;color:var(--muted);font-size:24px;cursor:pointer}
+.modal .close:hover{color:var(--text)}
+.hamburger{display:none;background:none;border:none;cursor:pointer;padding:4px}
+.hamburger span{display:block;width:22px;height:2px;background:var(--text);margin:5px 0}
 @media(max-width:768px){
-  .nav-links{display:none}
-  .hero h1{font-size:40px;letter-spacing:-1.5px}
-  .hero p{font-size:16px}
-  .stats-inner{grid-template-columns:repeat(2,1fr)}
-  .bots-grid{grid-template-columns:1fr}
-  .steps{grid-template-columns:1fr;gap:24px}
-  .pricing-grid{grid-template-columns:1fr}
-  .testimonials{grid-template-columns:1fr}
-  .section-title{font-size:32px}
-  .footer-inner{flex-direction:column;gap:20px;text-align:center}
-  .hero-inner,.section-inner,.nav-inner{padding-left:20px;padding-right:20px}
-  .stats-bar{padding:0 20px}
+nav{padding:16px 20px}
+.nav-links{display:none;position:fixed;top:60px;left:0;right:0;background:rgba(5,5,8,0.95);backdrop-filter:blur(20px);flex-direction:column;padding:24px;gap:20px;border-bottom:1px solid var(--border)}
+.nav-links.open{display:flex}
+.hamburger{display:block}
+.hero{padding:120px 20px 60px}
+.hero-stats{gap:24px;flex-wrap:wrap}
+.hero-stat .num{font-size:28px}
+.bots-grid{grid-template-columns:1fr}
+.track-grid,.pricing-grid{grid-template-columns:1fr}
+section{padding:80px 20px}
+.track-card .big{font-size:48px}
+footer{flex-direction:column;text-align:center;padding:32px 20px}
 }
-
-/* Animations */
-.fade-up{opacity:0;transform:translateY(30px);transition:all 0.6s ease}
-.fade-up.visible{opacity:1;transform:translateY(0)}
-
-.modal-overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);z-index:200;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
-.modal-overlay.show{display:flex}
-.modal{background:#12121a;border:1px solid rgba(255,255,255,0.1);border-radius:20px;padding:40px;max-width:480px;width:90%}
-.modal h2{font-size:24px;font-weight:800;margin-bottom:8px;letter-spacing:-1px}
-.modal p{color:#9ca3af;font-size:14px;margin-bottom:24px;line-height:1.5}
-.modal input{width:100%;padding:14px 16px;background:#1a1a28;border:1px solid rgba(255,255,255,0.1);border-radius:12px;color:#e8e6e3;font-size:15px;font-family:'Outfit',sans-serif;margin-bottom:12px;outline:none}
-.modal input:focus{border-color:#00d4aa}
-.modal input::placeholder{color:#6b7280}
-.modal button{width:100%;padding:14px;background:#00d4aa;color:#0a0a0f;border:none;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;font-family:'Outfit',sans-serif;margin-bottom:8px}
-.modal .cancel{background:transparent;color:#9ca3af;border:1px solid rgba(255,255,255,0.1)}
-.modal .steps-mini{font-size:12px;color:#6b7280;line-height:1.6;margin-bottom:16px;background:#1a1a28;padding:12px;border-radius:8px}
+@media(max-width:480px){.hero h1{font-size:36px}.price-amount{font-size:40px}}
 </style>
 </head>
 <body>
-
-<!-- Nav -->
-<nav id="nav">
-<div class="nav-inner">
-  <div class="logo">desi<span>bulls</span></div>
-  <div class="nav-links">
-    <a href="#bots">Bots</a>
-    <a href="#how">How it works</a>
-    <a href="#pricing">Pricing</a>
-    <a href="#pricing" class="nav-cta">Get started</a>
-  </div>
+<div class="orb orb-1"></div><div class="orb orb-2"></div><div class="orb orb-3"></div><div class="orb orb-4"></div><div class="orb orb-5"></div>
+<nav>
+<div class="logo">DESI BULLS</div>
+<div class="nav-links" id="navLinks">
+<a href="#bots">Bots</a><a href="#schedule">Schedule</a><a href="#performance">Performance</a><a href="#pricing">Pricing</a>
+<a href="#pricing" class="nav-cta">Get Started</a>
 </div>
+<button class="hamburger" onclick="document.getElementById('navLinks').classList.toggle('open')"><span></span><span></span><span></span></button>
 </nav>
 
-<!-- Hero -->
 <section class="hero">
-<div class="hero-inner">
-  <div class="hero-badge">Live and running for 1,200+ traders</div>
-  <h1>AI trading bots for your <span class="gr">Discord server</span></h1>
-  <p>8 plug-and-play bots that post institutional-grade market data to your Discord automatically. Every single day. Zero manual effort.</p>
-  <div class="hero-btns">
-    <a href="#pricing" class="btn-primary">View pricing</a>
-    <a href="#bots" class="btn-secondary">See the bots</a>
-  </div>
+<div class="hero-badge"><span>Live &amp; automated</span></div>
+<h1>AI-Powered<br><span class="accent">Trading Intelligence</span></h1>
+<p class="hero-sub">10 automated bots scanning markets, tracking institutional flows, and delivering actionable signals &mdash; before you even open your charts.</p>
+<div class="hero-actions">
+<a href="#pricing" class="btn-primary">Get Started &rarr;</a>
+<a href="#bots" class="btn-secondary">See All Bots</a>
 </div>
+<div class="hero-stats">
+<div class="hero-stat"><div class="num">10</div><div class="lbl">Live Bots</div></div>
+<div class="hero-stat"><div class="num">15+</div><div class="lbl">Daily Posts</div></div>
+<div class="hero-stat"><div class="num">24/7</div><div class="lbl">Automated</div></div>
+<div class="hero-stat"><div class="num">$1</div><div class="lbl">Per Day</div></div>
+</div>
+<div class="scroll-hint"><span>Scroll</span><div class="scroll-line"></div></div>
 </section>
 
-<!-- Stats -->
-<div class="stats-bar fade-up">
-<div class="stats-inner">
-  <div class="stat"><div class="stat-num">10</div><div class="stat-label">Automated bots</div></div>
-  <div class="stat"><div class="stat-num">15+</div><div class="stat-label">Daily posts</div></div>
-  <div class="stat"><div class="stat-num">1,200</div><div class="stat-label">Active traders</div></div>
-  <div class="stat"><div class="stat-num">24/7</div><div class="stat-label">AI scanner</div></div>
-</div>
-</div>
-
-<!-- Bots -->
 <section id="bots">
-<div class="section-inner">
-  <div class="section-tag">The bot suite</div>
-  <div class="section-title">Everything your Discord needs</div>
-  <div class="section-sub">Each bot runs on autopilot. Your members get professional-grade data without you doing anything.</div>
-  
-  <div class="bots-grid">
-    <div class="bot-card fade-up">
-      <div class="bot-icon" style="background:rgba(139,92,246,0.15)">&#129302;</div>
-      <h3>AI Stock Scanner</h3>
-      <p>Members type !scan AAPL and get instant technical + fundamental analysis. !ai AAPL for Claude AI-powered deep analysis with trade ideas.</p>
-      <span class="bot-tag tag-ai">AI Powered</span>
-    </div>
-    
-    <div class="bot-card fade-up">
-      <div class="bot-icon" style="background:rgba(0,212,170,0.15)">&#128200;</div>
-      <h3>Relative Strength Scanner</h3>
-      <p>Daily rankings of top 30 stocks vs SPX. Shows leaders, laggards, momentum flips, and multi-day streaks. Pre-market + after close.</p>
-      <span class="bot-tag tag-free">Free data</span>
-    </div>
-    
-    <div class="bot-card fade-up">
-      <div class="bot-icon" style="background:rgba(245,158,11,0.15)">&#128168;</div>
-      <h3>Fear &amp; Greed Meter</h3>
-      <p>Composite sentiment score from VIX, momentum, moving averages, and market breadth. Posts morning and after close with actionable insights.</p>
-      <span class="bot-tag tag-data">Sentiment</span>
-    </div>
-    
-    <div class="bot-card fade-up">
-      <div class="bot-icon" style="background:rgba(239,68,68,0.15)">&#128197;</div>
-      <h3>Economic Calendar</h3>
-      <p>Weekly calendar + daily alerts with historical impact scores. "CPI tomorrow — last 12 releases averaged ±1.2% SPX move." Data-driven event prep.</p>
-      <span class="bot-tag tag-data">Events</span>
-    </div>
-    
-    <div class="bot-card fade-up">
-      <div class="bot-icon" style="background:rgba(59,130,246,0.15)">&#128202;</div>
-      <h3>Options OI Tracker</h3>
-      <p>Tracks daily open interest changes at key strikes. Spots where big money is positioning. Put/call ratio shifts and sentiment changes.</p>
-      <span class="bot-tag tag-data">Options</span>
-    </div>
-    
-    <div class="bot-card fade-up">
-      <div class="bot-icon" style="background:rgba(16,185,129,0.15)">&#128176;</div>
-      <h3>Earnings Predictor</h3>
-      <p>Before earnings: implied vs historical move comparison. "Options pricing ±8.2%, actual avg ±6.1% — options are OVERPRICED." Edge finder.</p>
-      <span class="bot-tag tag-free">Free data</span>
-    </div>
-    
-    <div class="bot-card fade-up">
-      <div class="bot-icon" style="background:rgba(239,68,68,0.15)">&#128293;</div>
-      <h3>Volume Spike Detector</h3>
-      <p>Flags stocks trading 2x+ average volume. "NFLX 3.2x average volume — something is happening." Catches institutional moves early.</p>
-      <span class="bot-tag tag-free">Free data</span>
-    </div>
-    
-    <div class="bot-card fade-up">
-      <div class="bot-icon" style="background:rgba(239,68,68,0.15)">&#127919;</div>
-      <h3>Day Trade Watchlist</h3>
-      <p>Top 10 stocks ranked by expected intraday range. Pre-market gaps, ATR, volatility expansion alerts. Know exactly which stocks will move today before the bell.</p>
-      <span class="bot-tag tag-data">Scalpers</span>
-    </div>
-    
-    <div class="bot-card fade-up">
-      <div class="bot-icon" style="background:rgba(59,130,246,0.15)">&#128506;</div>
-      <h3>SPY Key Levels</h3>
-      <p>Daily pivot points, R1-R3 and S1-S3, moving averages, round numbers, and a scalper cheat sheet. Everything a day trader needs before the opening bell.</p>
-      <span class="bot-tag tag-data">Day Trade</span>
-    </div>
-    
-    <div class="bot-card fade-up">
-      <div class="bot-icon" style="background:rgba(139,92,246,0.15)">&#128200;</div>
-      <h3>Expected Move (Live)</h3>
-      <p>Live 0DTE SPY straddle price pulled from IBKR at 9:35 AM. The exact same expected move calculation professional market makers use. No other Discord has this.</p>
-      <span class="bot-tag tag-ai">IBKR Live</span>
-    </div>
-    
-
-  </div>
+<div class="reveal">
+<div class="section-label">The Arsenal</div>
+<div class="section-title">10 bots working for you.<br>Every single day.</div>
+<div class="section-sub">Built from scratch. Not copied. Not outsourced. Each bot runs on our private servers and delivers institutional-grade data straight to your Discord.</div>
+</div>
+<div class="bots-grid reveal">
+<div class="bot-card"><div class="bot-num">01</div><span class="bot-icon">&#128202;</span><div class="bot-name">Relative Strength Scanner</div><div class="bot-desc">50 stocks ranked by momentum. Leaders, laggards, sector rotation, RSI, streaks. Know who's winning before the bell.</div><span class="bot-tag tag-live">Pre-market</span></div>
+<div class="bot-card"><div class="bot-num">02</div><span class="bot-icon">&#128561;</span><div class="bot-name">Fear &amp; Greed Index</div><div class="bot-desc">Composite score from VIX, breadth, momentum, moving averages, and 52-week data. Twice daily &mdash; open and close.</div><span class="bot-tag tag-live">2x Daily</span></div>
+<div class="bot-card"><div class="bot-num">03</div><span class="bot-icon">&#128197;</span><div class="bot-name">Economic Calendar</div><div class="bot-desc">Weekly previews + daily alerts with historical SPX impact scores. Know what moves the market before it moves.</div><span class="bot-tag tag-data">Weekly + Daily</span></div>
+<div class="bot-card"><div class="bot-num">04</div><span class="bot-icon">&#128293;</span><div class="bot-name">Volume Spike Detector</div><div class="bot-desc">Flags stocks trading 1.5x+ average volume. Catches institutional moves and unusual activity before anyone else.</div><span class="bot-tag tag-live">After Close</span></div>
+<div class="bot-card"><div class="bot-num">05</div><span class="bot-icon">&#128176;</span><div class="bot-name">Earnings Predictor</div><div class="bot-desc">Implied vs historical moves for stocks reporting this week. Weekly preview + day-of alerts with volatility analysis.</div><span class="bot-tag tag-data">Weekly</span></div>
+<div class="bot-card"><div class="bot-num">06</div><span class="bot-icon">&#127919;</span><div class="bot-name">Day Trade Watchlist</div><div class="bot-desc">Top 10 expected movers ranked by ATR + pre-market gaps. Know exactly which stocks will move today.</div><span class="bot-tag tag-live">Pre-market</span></div>
+<div class="bot-card"><div class="bot-num">07</div><span class="bot-icon">&#128506;</span><div class="bot-name">SPY Key Levels</div><div class="bot-desc">Daily pivots, R1-R3, S1-S3, ATR bands, round numbers. A scalper's cheat sheet every morning.</div><span class="bot-tag tag-data">Pre-market</span></div>
+<div class="bot-card"><div class="bot-num">08</div><span class="bot-icon">&#129504;</span><div class="bot-name">AI Stock Scanner</div><div class="bot-desc">Claude AI deep analysis on any stock. Technical, fundamental, and trade ideas &mdash; on demand, 8AM-9PM.</div><span class="bot-tag tag-pro">Pro Only</span></div>
+<div class="bot-card"><div class="bot-num">09</div><span class="bot-icon">&#128279;</span><div class="bot-name">Options OI Tracker</div><div class="bot-desc">Open interest changes, put/call ratio shifts, and where big money is positioning. Updated daily after close.</div><span class="bot-tag tag-pro">Pro Only</span></div>
+<div class="bot-card"><div class="bot-num">10</div><span class="bot-icon">&#128200;</span><div class="bot-name">Expected Move (IBKR Live)</div><div class="bot-desc">Live 0DTE SPY straddle price pulled directly from our brokerage at 9:35 AM. No other Discord has this.</div><span class="bot-tag tag-pro">Pro &middot; IBKR Live</span></div>
 </div>
 </section>
 
-<!-- Discord Preview -->
-<section style="padding:60px 0">
-<div class="section-inner">
-  <div class="section-tag">Live preview</div>
-  <div class="section-title">What your members see</div>
-  <div class="section-sub">Real output from our bots — posted automatically to Discord every day.</div>
-  
-  <div class="preview fade-up">
-    <div class="preview-header">
-      <div class="preview-dot"></div>
-      <div class="preview-title"># market-analysis</div>
-    </div>
-    <div class="preview-line"><span class="cmd">!scan NVDA</span></div>
-    <div class="preview-line">&#128269; <strong>NVIDIA Corp (NVDA)</strong></div>
-    <div class="preview-line">&#128994; <strong>$142.50</strong> (+2.35%)</div>
-    <div class="preview-line">RSI(14): <span class="val">62.4</span> — Bullish</div>
-    <div class="preview-line">MACD: <span class="pos">+1.85</span> — Bullish crossover</div>
-    <div class="preview-line">20-MA: $138.20 (<span class="pos">above</span>)</div>
-    <div class="preview-line">Support: <span class="val">$135.40</span> | Resistance: <span class="val">$148.20</span></div>
-    <div class="preview-line">P/E: <span class="val">54.2</span> | Revenue growth: <span class="pos">+122.4%</span></div>
-    <div class="preview-line">Overall: &#128994; <strong>BULLISH</strong> (4/5 signals)</div>
-  </div>
+<section id="schedule">
+<div class="reveal">
+<div class="section-label">Daily Schedule</div>
+<div class="section-title">15+ posts.<br>Before you even look.</div>
+<div class="section-sub">Every signal, every scan, every alert &mdash; automated and on time.</div>
+</div>
+<div class="schedule reveal">
+<div class="sched-row"><div class="sched-time">6:00 AM</div><div><div class="sched-name">Earnings Alerts</div><div class="sched-desc">Stocks reporting today with implied vs historical moves</div></div></div>
+<div class="sched-row"><div class="sched-time">7:00 AM</div><div><div class="sched-name">RS Scanner + Day Trade Watchlist</div><div class="sched-desc">50-stock momentum scan + top 10 expected movers</div></div></div>
+<div class="sched-row"><div class="sched-time">7:30 AM</div><div><div class="sched-name">Fear &amp; Greed + SPY Key Levels</div><div class="sched-desc">Market sentiment composite + pivot points for scalpers</div></div></div>
+<div class="sched-row"><div class="sched-time">9:35 AM</div><div><div class="sched-name">Expected Move (Live)</div><div class="sched-desc">0DTE SPY straddle from IBKR &mdash; Pro exclusive</div></div></div>
+<div class="sched-row"><div class="sched-time">8AM-9PM</div><div><div class="sched-name">AI Scanner On Demand</div><div class="sched-desc">!scan or !ai any stock for instant analysis</div></div></div>
+<div class="sched-row"><div class="sched-time">4:15 PM</div><div><div class="sched-name">Close Reports</div><div class="sched-desc">RS update, Fear &amp; Greed, OI changes, volume spikes</div></div></div>
+<div class="sched-row"><div class="sched-time">Sunday</div><div><div class="sched-name">Weekly Preview</div><div class="sched-desc">Economic calendar + earnings preview for the week ahead</div></div></div>
 </div>
 </section>
 
-<!-- How it works -->
-<section id="how" style="background:var(--bg2)">
-<div class="section-inner">
-  <div class="section-tag">Setup</div>
-  <div class="section-title">Live in 24 hours</div>
-  <div class="section-sub">We handle everything. You just provide your Discord webhook URLs.</div>
-  
-  <div class="steps">
-    <div class="step fade-up">
-      <div class="step-num">01</div>
-      <h3>Choose your plan</h3>
-      <p>Pick the bot package that fits your community. All bots come pre-configured and tested.</p>
-    </div>
-    <div class="step fade-up">
-      <div class="step-num">02</div>
-      <h3>Send us your webhooks</h3>
-      <p>Create Discord webhooks in your server channels and share them with us. Takes 2 minutes.</p>
-    </div>
-    <div class="step fade-up">
-      <div class="step-num">03</div>
-      <h3>Bots go live</h3>
-      <p>We configure your bots and deploy them. Your Discord starts getting automated posts within 24 hours.</p>
-    </div>
-  </div>
+<section id="performance">
+<div class="reveal">
+<div class="section-label">Track Record</div>
+<div class="section-title">Numbers don't lie.</div>
+</div>
+<div class="track-grid reveal">
+<div class="track-card"><div class="big green">90%+</div><div class="label">Average realized growth on our 10-year investment portfolio. SNOW +100%, COIN +70%, BABA +40%.</div></div>
+<div class="track-card"><div class="big cyan">10/11</div><div class="label">Closed positions profitable. Only loss: a company that went bankrupt. Everything we controlled was green.</div></div>
+<div class="track-card"><div class="big purple">$0</div><div class="label">Spent on courses or gurus. Every tool built in-house. Every scanner coded from scratch. Real engineering.</div></div>
+<div class="track-card"><div class="big green">$1/day</div><div class="label">What you pay for institutional-grade tools. Bloomberg charges $2,000/month. We charge $30.</div></div>
 </div>
 </section>
 
-<!-- Pricing -->
 <section id="pricing">
-<div class="section-inner">
-  <div class="section-tag">Pricing</div>
-  <div class="section-title">Simple pricing, massive value</div>
-  <div class="section-sub">Compare this to building it yourself — 200+ hours of development work, ongoing maintenance, and API costs.</div>
-  
-  <div class="pricing-grid">
-    <div class="price-card fade-up">
-      <div class="price-name">Starter</div>
-      <div class="price-amount">$39<span>/month</span></div>
-      <div class="price-desc">Perfect for growing Discord communities that want professional automated content.</div>
-      <ul class="price-features">
-        <li>Relative Strength Scanner</li>
-        <li>Fear &amp; Greed Meter</li>
-        <li>Economic Calendar + Alerts</li>
-        <li>Volume Spike Detector</li>
-        <li>Earnings Move Predictor</li>
-        <li>Day Trade Watchlist (top movers)</li>
-        <li>SPY Key Levels (pivots + ATR)</li>
-        <li>15+ automated daily posts</li>
-        <li>Email support</li>
-      </ul>
-      <a href="#" onclick="openModal('starter')" class="price-btn price-btn-secondary" id="starter-btn">Get started</a>
-    </div>
-    
-    <div class="price-card featured fade-up">
-      <div class="price-name">Pro</div>
-      <div class="price-amount">$149<span>/month</span></div>
-      <div class="price-desc">Everything in Starter plus AI-powered analysis and options intelligence.</div>
-      <ul class="price-features">
-        <li>Everything in Starter</li>
-        <li>SPY Expected Move (IBKR live data)</li>
-        <li>AI Stock Scanner (!scan + !ai)</li>
-        <li>Options OI Change Tracker</li>
-        <li>Custom bot names &amp; branding</li>
-        <li>Custom stock watchlist (your tickers)</li>
-        <li>Dedicated setup &amp; configuration</li>
-        <li>Priority support + setup call</li>
-      </ul>
-      <a href="#" onclick="openModal('pro')" class="price-btn price-btn-primary" id="pro-btn">Get started</a>
-    </div>
-  </div>
+<div class="reveal">
+<div class="section-label">Pricing</div>
+<div class="section-title">Built for traders.<br>Priced for everyone.</div>
+</div>
+<div class="pricing-grid reveal">
+<div class="price-card">
+<div class="price-label">Starter</div>
+<div class="price-amount">$39<span>/month</span></div>
+<div class="price-note">Everything you need to start</div>
+<ul class="price-features">
+<li>RS Scanner (50 stocks)</li>
+<li>Fear &amp; Greed Index</li>
+<li>Economic Calendar</li>
+<li>Volume Spike Detector</li>
+<li>Earnings Predictor</li>
+<li>Day Trade Watchlist</li>
+<li>SPY Key Levels</li>
+<li>15+ automated daily posts</li>
+</ul>
+<a href="javascript:void(0)" class="price-btn secondary" onclick="showModal('starter')">Get Starter &rarr;</a>
+</div>
+<div class="price-card featured">
+<div class="price-label">Pro</div>
+<div class="price-amount">$149<span>/month</span></div>
+<div class="price-note">For serious traders</div>
+<ul class="price-features">
+<li>Everything in Starter</li>
+<li>AI Stock Scanner (Claude AI)</li>
+<li>Options OI Tracker</li>
+<li>SPY Expected Move (IBKR live)</li>
+<li>Custom stock watchlist</li>
+<li>Priority support</li>
+<li>Custom branding</li>
+</ul>
+<a href="javascript:void(0)" class="price-btn primary" onclick="showModal('pro')">Get Pro &rarr;</a>
+</div>
 </div>
 </section>
 
-<!-- Testimonials -->
-<section style="background:var(--bg2)">
-<div class="section-inner">
-  <div class="section-tag">Community</div>
-  <div class="section-title">Loved by traders</div>
-  
-  <div class="testimonials">
-    <div class="test-card fade-up">
-      <div class="test-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-      <div class="test-text">"The AI scanner alone is worth the subscription. My members use it 50+ times a day. Engagement went through the roof."</div>
-      <div class="test-author">Discord Group Owner</div>
-      <div class="test-role">2,500+ members</div>
-    </div>
-    <div class="test-card fade-up">
-      <div class="test-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-      <div class="test-text">"I was spending 2 hours every morning posting market updates. Now the bots do it better than I ever could. Completely automated."</div>
-      <div class="test-author">Trading Educator</div>
-      <div class="test-role">800+ students</div>
-    </div>
-    <div class="test-card fade-up">
-      <div class="test-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-      <div class="test-text">"The fear and greed meter and relative strength reports give my group an institutional edge. Worth every penny."</div>
-      <div class="test-author">Options Trader</div>
-      <div class="test-role">1,500+ members</div>
-    </div>
-  </div>
-</div>
-</section>
-
-<!-- CTA -->
 <section class="cta-section">
-<div class="section-inner cta-inner">
-  <h2>Ready to level up your Discord?</h2>
-  <p>Join the trading communities already using DesiBulls bots to deliver institutional-grade data to their members on autopilot.</p>
-  <a href="#pricing" class="btn-primary">Get started today</a>
+<div class="reveal">
+<h2>Stop guessing.<br><span class="accent">Start knowing.</span></h2>
+<p>Join traders who wake up to institutional-grade data every morning. Automated. Reliable. Built to last.</p>
+<a href="#pricing" class="btn-primary">Get Started &rarr;</a>
 </div>
 </section>
 
-<!-- Footer -->
 <footer>
-<div class="footer-inner">
-  <div class="logo">desi<span>bulls</span></div>
-  <div class="footer-links">
-    <a href="#bots">Bots</a>
-    <a href="#pricing">Pricing</a>
-    
-  </div>
-  <div class="footer-copy">&copy; 2026 DesiBulls. All rights reserved.</div>
-</div>
+<div class="logo">DESI BULLS</div>
+<div class="footer-links"><a href="mailto:support@tradelizer.com">Contact</a><a href="/setup.html">Setup</a><a href="#">Discord</a></div>
+<p>&copy; 2026 Desi Bulls. All rights reserved.</p>
 </footer>
 
-<script>
-// Scroll nav
-window.addEventListener('scroll',()=>{
-  document.getElementById('nav').classList.toggle('scrolled',window.scrollY>50)
-})
-
-// Fade in on scroll
-const observer=new IntersectionObserver((entries)=>{
-  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');observer.unobserve(e.target)}})
-},{threshold:0.1,rootMargin:'0px 0px -50px 0px'})
-document.querySelectorAll('.fade-up').forEach(el=>observer.observe(el))
-
-var selectedPlan='';
-var stripeLinks={starter:'https://buy.stripe.com/eVq6oJcs43rn54029ecQU00',pro:'https://buy.stripe.com/7sYbJ3gIkaTP0NK9BGcQU01'};
-
-function openModal(plan){selectedPlan=plan;document.getElementById('signup-modal').classList.add('show')}
-function closeModal(){document.getElementById('signup-modal').classList.remove('show')}
-
-function goToCheckout(){
-  var wh=document.getElementById('webhook-input').value.trim();
-  var em=document.getElementById('email-input').value.trim();
-  var nm=document.getElementById('name-input').value.trim();
-  if(!wh||!wh.includes('discord.com/api/webhooks')){alert('Please enter a valid Discord webhook URL');return}
-  if(!em||!em.includes('@')){alert('Please enter your email');return}
-  if(!nm){alert('Please enter your server name');return}
-  var ref=btoa(JSON.stringify({w:wh,e:em,n:nm,p:selectedPlan}));
-  var url=stripeLinks[selectedPlan]+'?client_reference_id='+encodeURIComponent(ref)+'&prefilled_email='+encodeURIComponent(em);
-  window.location.href=url;
-}
-
-document.getElementById('signup-modal').addEventListener('click',function(e){if(e.target===this)closeModal()});
-</script>
-
-
-<div class="modal-overlay" id="signup-modal">
+<div class="modal-overlay" id="modal">
 <div class="modal">
-<h2>Almost there!</h2>
-<p>Before checkout, we need your Discord webhook URL so we can activate your bots automatically after payment.</p>
-<div class="steps-mini">
-<strong>How to get your webhook URL:</strong><br>
-1. Open Discord → right-click your channel<br>
-2. Edit Channel → Integrations → Webhooks<br>
-3. New Webhook → Copy URL → Paste below
-</div>
-<input type="url" id="webhook-input" placeholder="https://discord.com/api/webhooks/...">
-<input type="email" id="email-input" placeholder="Your email address">
-<input type="text" id="name-input" placeholder="Your Discord server name">
-<button onclick="goToCheckout()">Continue to payment</button>
-<button class="cancel" onclick="closeModal()">Cancel</button>
+<button class="close" onclick="hideModal()">&times;</button>
+<h3>Get Started</h3>
+<p id="modal-desc">Enter your Discord webhook URL to receive automated bot posts in your server.</p>
+<input type="text" id="m-webhook" placeholder="Discord Webhook URL">
+<input type="email" id="m-email" placeholder="Email address">
+<input type="text" id="m-server" placeholder="Discord server name">
+<button class="submit" onclick="checkout()">Continue to Payment &rarr;</button>
 </div>
 </div>
+
+<script>
+var obs=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target)}})},{threshold:0.1,rootMargin:'0px 0px -60px 0px'});
+document.querySelectorAll('.reveal').forEach(function(el){obs.observe(el)});
+var selectedPlan='';
+function showModal(plan){selectedPlan=plan;document.getElementById('modal').classList.add('active');document.getElementById('modal-desc').textContent=plan==='pro'?'Pro plan \u2014 10 bots including AI Scanner, OI Tracker, and IBKR live Expected Move.':'Starter plan \u2014 7 automated bots delivering 15+ daily posts to your Discord.'}
+function hideModal(){document.getElementById('modal').classList.remove('active')}
+function checkout(){var wh=document.getElementById('m-webhook').value,em=document.getElementById('m-email').value,sv=document.getElementById('m-server').value;if(!wh||!em){alert('Please fill in webhook URL and email');return}var data=btoa(JSON.stringify({webhook:wh,email:em,server:sv}));var urls={starter:'https://buy.stripe.com/eVq6oJcs43rn54029ecQU00',pro:'https://buy.stripe.com/7sYbJ3gIkaTP0NK9BGcQU01'};window.location.href=urls[selectedPlan]+'?client_reference_id='+encodeURIComponent(data)+'&prefilled_email='+encodeURIComponent(em)}
+</script>
 </body>
 </html>
